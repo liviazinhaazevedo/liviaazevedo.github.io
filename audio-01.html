@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Áudio</title>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.7/plyr.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+      
+    body {
+      height: 100vh;
+      overflow: hidden;
+      margin: 0px;
+    }    
+
+    .audio-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Open Sans', sans-serif;
+      justify-content: flex-start;
+      cursor: pointer; /* Adicione o cursor pointer para indicar que é clicável */
+    }
+
+    .audio-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      padding-right: 8px;
+    }
+
+    .audio-container .microphone-icon {
+      position: relative;
+      margin-left: -67px;
+      margin-bottom: -25px;
+      font-size: 22px;
+      color: #4ad954;
+    }
+
+    .audio-container .microphone-icon.blue {
+      color: #3db8ee;
+    }
+
+    .plyr--audio .plyr__control.plyr__tab-focus,
+    .plyr--audio .plyr__control:hover,
+    .plyr--audio .plyr__control[aria-expanded=false] {
+      background: rgba(0, 0, 0, 0);
+      background: var(--plyr-audio-control-background-hover, var(--plyr-color-main, var(--plyr-color-main, rgba(0, 0, 0, 0))));
+      color: rgba(0, 0, 0, 0);
+      color: var(--plyr-audio-control-color-hover, #797979)
+    }
+
+    .plyr--audio .plyr__controls {
+      background: rgba(0, 0, 0, 0);
+      background: var(--plyr-audio-controls-background, rgba(0, 0, 0, 0));
+      border-radius: inherit;
+      color: #4a5464;
+      color: var(--plyr-audio-control-color,#4a5464);
+      margin-left: 0px;
+    }
+
+    .plyr--audio .plyr__control--overlaid .plyr__control__icon {
+      font-size: 33px;
+    }
+
+    .plyr--full-ui input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      border: 0;
+      border-radius: 100%;
+      box-shadow: 0 1px 1px rgba(35,40,47,.15),0 0 0 1px rgba(35,40,47,.2);
+      box-shadow: var(--plyr-range-thumb-shadow,0 1px 1px rgba(35,40,47,.15),0 0 0 1px rgba(35,40,47,.2));
+      height: 13px;
+      height: var(--plyr-range-thumb-height,13px);
+      margin-top: -4px;
+      margin-top: calc(var(--plyr-range-thumb-height,13px)/2*-1 - var(--plyr-range-track-height,5px)/2*-1);
+      position: relative;
+      -webkit-transition: all .2s ease;
+      transition: all .2s ease;
+      width: 13px;
+      width: var(--plyr-range-thumb-height,13px);
+      background: var(--range-thumb-background, #4ad954);
+    }  
+
+    .plyr--full-ui input[type=range].blue::-webkit-slider-thumb {
+      background: var(--range-thumb-background-active, #3db8ee);
+    }
+  
+    .hide {
+      display: none;
+    }
+
+    .plyr__controls .plyr__controls__item.plyr__progress__container:first-child,
+    .plyr__controls .plyr__controls__item.plyr__time+.plyr__time,
+    .plyr__controls .plyr__controls__item.plyr__time:first-child {
+      padding-left: 0;
+      display: block;
+      margin-left: 7.5px;
+    }
+
+    .plyr__time+.plyr__time:before {
+      content: "";
+      margin-right: var(--plyr-control-spacing);
+    }
+
+    /* Ocultar os controles de tempo */
+    .plyr--audio .plyr__controls .plyr__controls__item.plyr__time--current.hide,
+    .plyr--audio .plyr__controls .plyr__controls__item.plyr__time--duration.hide {
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="audio-container" id="audioContainer">
+    <!-- Cole o link do Seu áudio Abaixo-->
+    <audio class="plyr" src="https://ff1f25d3a56c79f157f101c933356f0df0b426bac267c041b2465ac-apidata.googleusercontent.com/download/storage/v1/b/liviazinhaazevedo/o/download.ogg?jk=ATmLuOEv4G-dhDM3bFXieE8YNOOHyCgYHYnKCVuyCXTmAat7CPaQw8YMQNJvKH0HOA7txAcG6h8KZIAOV-l31YV72eai3-3oKmd_lZQuH0HYNZzn93B1LEkO0hUfcYDZwhPBe8WiYEYzoVb5MkraQV59wlHDGp9kcXNmDgoyNjaHC5br93epHSJo5lRZ0qSVl0FdwOT2_uXuZGo7Otfn5Wi9Tfosp4b44OJovqO3q6pBGdI8-zMxKfqhDV1L2fnx3Hwr1gnzOIYub9L0EZiH0X5XzuXJ4XH1FaHqhFHzzJsHir3lmk6hB8aHlGIg70e_licZkQmK6xXwyWVgR-CEMegV0S32U1FkiPnsTTh_EZPAprjbZBCTNJ6O6vMZMl-dRYO-Qa5t5pY1bM5Z9s2WvDiCXxl8AAFJWZ47RT9N4hXUKgVG5Nu3L0xXGUd5-R7YDRqFDpkAhBKkWcZ2kBdkEOWpMciLaUjd2c-TSa9tIkt1UOWc0iXGv4bDcgUOGJq_E7UB8BjxEOq0UdUaieGukqQqHd3BmgZ6lnEZU3TP1xHgm3a9rcl5ZQ3jjJ9WfTne_OdJOMUSxsYTXuUnJZiHwmOqRTKU5e-LbE39-nBGXdWxX9Zy6BE4dcGfa6Eg2sDtEQiI9edjCUwGD6B7Pe_TIb68zkkAsFUgeNjwZhveyCSXWpNkMxmcKAxGiPIkRHHWe6IlyavvgtdXNYOlIIIV-bSftGLgyZAoJR__bvMgNta8px7r46347LuOJ1sxXfQlI9Hasnfba89Dtok9mNrL3GV2rnS-QSe3ROY2g3Fn7DEHN7lOLzErWdqkFxokqEq_LVMgLUjvWtV2-hek2nh9P-aeEl03KoXYHBwZEXBVLenRLV28b3X7VOhasGe0iWcLwQPH1qaqS98D9BdEjs3LG1Nuhu8B0PXEQ-EuxaFhfg44tlcRvK3pENfGfkcbcHnEGSzgfI0wiT60GRL9fv_e6D_0zaf8NY1xPgLzvC7eJBkn8Ygl0SZDkn_uEl5uw-rauHUTAPuABa4iVm5y_Pk29krTeaj0vYvqpfaKNWB76InUD80zO3_MBBrOAvsMIsgtI3WhWo0tHYNbCiJOaDcVBHFm6sHCWj2ZmRhekVB8YGhotOqwETyQZvOCpkZGBryZMCEEOFEKGTO7rP0WsI_m_19fiK1tV1_GlMDB2Qvl5z_ZHPA8RtRHtqaPyFejPpylYU5XDbmP3HbdO-6z8zRHhleO9iAmCajW2uBD8KYpKZOpU7SDNKSIbnarp-v2GyGVAIaY_YnWxarps7rSvVE0uOarGSjSoX3KUOFWZORDBbxqWR2FLg8Nk63bQXjXzO2DvzoLkXVoNym-hromE6FbpRtezEVq99MCm060O9E0LQFu4pp23g2jDspnpVToZ0a3_eR4hXXXMlKMW8Lpwep6DzwjV6c6e06HA0C7zlYeGaal1imgy4alghzwPuTChE3iysF3_iDIG4stLqOWS4NePZDk1W1h1I8&isca=1"></audio>
+    <!-- Cole o link da Sua imagem Abaixo-->
+    <img src="https://storage.liviaazevedo.shop/typebot/public/typebots/clkzv054z0005mw516csfakb7/hostAvatar?v=1691365069640" alt="Imagem">
+    <div class="microphone-icon">
+      <i class="fas fa-microphone"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.plyr.io/3.6.7/plyr.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const player = new Plyr('.plyr', {
+        controls: ['play', 'progress', 'current-time', 'duration']
+      });
+
+      const audioElement = document.querySelector('.plyr');
+      const currentTimeElement = document.querySelector('.plyr__time--current');
+      const durationElement = document.querySelector('.plyr__time--duration');
+      const microphoneIcon = document.querySelector('.microphone-icon');
+
+      currentTimeElement.classList.add('hide'); // Adiciona a classe 'hide' ao iniciar
+
+      audioElement.addEventListener('play', function() {
+        currentTimeElement.classList.remove('hide');
+        durationElement.classList.add('hide');
+        microphoneIcon.classList.add('blue'); // Adiciona a classe 'blue' para alterar a cor do ícone
+        audioElement.classList.add('blue'); // Adiciona a classe 'blue' para alterar o background do controle deslizante
+        audioElement.style.setProperty('--range-thumb-background', '#3db8ee');
+      });
+
+      audioElement.addEventListener('pause', function() {
+        currentTimeElement.classList.add('hide');
+        durationElement.classList.remove('hide');
+      });
+
+      const audioContainer = document.getElementById('audioContainer');
+      audioContainer.addEventListener('click', function() {
+        const playButton = audioContainer.querySelector('.plyr__controls button[data-plyr="play"]');
+        playButton.click();
+      });
+
+      const playPauseButton = document.getElementById('audioContainer').querySelector('.plyr__controls button[data-plyr="play"]');
+      const audioBox = document.querySelector('.audio-box');
+      playPauseButton.addEventListener('click', function() {
+        const playButton = audioContainer.querySelector('.plyr__controls button[data-plyr="play"]');
+        playButton.click();
+      });
+
+      audioBox.addEventListener('click', function(event) {
+        event.stopPropagation(); 
+        const playButton = audioContainer.querySelector('.plyr__controls button[data-plyr="play"]');
+        playButton.click();
+      });
+    });
+  </script>
+</body>
+</html>
